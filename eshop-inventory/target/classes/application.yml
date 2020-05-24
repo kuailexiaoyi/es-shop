@@ -1,0 +1,35 @@
+spring:
+  redis: # redis cluster配置
+    jedis:
+      pool:
+        max-active: 8 # 最大连接数
+        max-wait: 3000 #最大等待时间，单位是ms
+        max-idle: 8 # 最大空闲数：当空闲连接数大于maxidle时，将进行回收
+        min-idle: 0 #最小空闲数：低于midle时，将创建新连接
+    timeout: 10000
+
+    host: 192.168.0.102 # redis 单机版配置
+    port: 6379
+
+    cluster: # redis cluster集群配置
+      nodes:
+        - 192.168.0.102:7001
+        - 192.168.0.102:7002
+        - 192.168.0.103:7003
+        - 192.168.0.103:7004
+        - 192.168.0.104:7005
+        - 192.168.0.104:7006
+    database: 1
+
+  # 数据库配置
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/eshop?serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+
+# 配置mybatis
+
+mybatis:
+  config-location: classpath:mybatis/MapperConfig.xml
+  mapper-locations: classpath:mapper/*.xml
