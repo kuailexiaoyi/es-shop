@@ -22,4 +22,9 @@ public interface Request {
      * @Date: 2020/5/26
      */
     int getProductId();
+
+    /**
+     * 是否强制刷新
+     */
+    boolean isForceRefresh();
 }

@@ -11,16 +11,32 @@ import com.es.shop.inventory.service.productinventory.ProductInventoryService;
  */
 public class ProductInventoryDBReloadRequest implements Request {
 
+    /**
+     * 商品Id
+     */
     private int productId;
 
+    /**
+     * 商品库存服务
+     */
     private ProductInventoryService productInventoryService;
+
+    /**
+     * 是否强制刷新
+     */
+    private boolean forceRefresh;
 
     public ProductInventoryDBReloadRequest() {
     }
 
     public ProductInventoryDBReloadRequest(int productId, ProductInventoryService productInventoryService) {
+        this(productId, productInventoryService, false);
+    }
+
+    public ProductInventoryDBReloadRequest(int productId, ProductInventoryService productInventoryService, boolean forceRefresh) {
         this.productId = productId;
         this.productInventoryService = productInventoryService;
+        this.forceRefresh = forceRefresh;
     }
 
     @Override
@@ -48,5 +64,14 @@ public class ProductInventoryDBReloadRequest implements Request {
 
     public void setProductInventoryService(ProductInventoryService productInventoryService) {
         this.productInventoryService = productInventoryService;
+    }
+
+    @Override
+    public boolean isForceRefresh() {
+        return forceRefresh;
+    }
+
+    public void setForceRefresh(boolean forceRefresh) {
+        this.forceRefresh = forceRefresh;
     }
 }

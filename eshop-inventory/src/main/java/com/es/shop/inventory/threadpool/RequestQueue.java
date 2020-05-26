@@ -5,7 +5,9 @@ import com.es.shop.inventory.request.Request;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Description: 请求内存队列
@@ -16,7 +18,12 @@ public class RequestQueue {
     /**
      * 初始化内存队列
      */
-    List<ArrayBlockingQueue<Request>> queues = new ArrayList<ArrayBlockingQueue<Request>>();
+    private List<ArrayBlockingQueue<Request>> queues = new ArrayList<ArrayBlockingQueue<Request>>();
+
+    /**
+     * 读写请求标记
+     */
+    private Map<Integer, Boolean> flagMap = new ConcurrentHashMap<Integer, Boolean>();
 
     public RequestQueue() {
     }
@@ -61,6 +68,16 @@ public class RequestQueue {
      */
     public ArrayBlockingQueue<Request> getQueue(int index) {
         return this.queues.get(index);
+    }
+
+    /**
+     * @Desc: 获取读写请求标记Map
+     * @Param
+     * @Return java.util.Map<java.lang.Integer, java.lang.Boolean>
+     * @Date: 2020/5/26
+     */
+    public Map<Integer, Boolean> getFlagMap() {
+        return this.flagMap;
     }
 
     /**

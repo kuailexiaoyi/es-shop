@@ -45,4 +45,9 @@ public class ProductInventoryDBUpdateRequest implements Request {
     public void setProductInventoryService(ProductInventoryService productInventoryService) {
         this.productInventoryService = productInventoryService;
     }
+
+    @Override
+    public boolean isForceRefresh() {
+        return false;
+    }
 }

@@ -70,10 +70,18 @@ public class ProductInventoryController {
             logger.info("ProductInventoryController.queryOne, 从数据库获取数据,productId : {}", productId, JSON.toJSONString(productInventoryDO));
             // 刷新缓存
             if (productInventoryDO != null) {
-                productInventoryService.refreshProductInventoryCache(productInventoryDO);
+                // 将数据刷新一下
+                // 这个过程，实际上是一个读操作的过程，也必须放到队列中去，但是还是有数据不一致的问题。
+                Request readReqest = new ProductInventoryDBReloadRequest(productId, productInventoryService, true);
+                requestAsyncProcessService.process(request);
                 logger.info("ProductInventoryController.queryOne,刷新Redis缓存,productId : {}", productId);
+                // 代码运行到这里，只有三种情况
+                // 1、上一次请求也是读请求，但是数据被刷新到了Redis，但是Redis通过LRU算法将数据给清理掉了，标志为还是false。
+                // 此时下一个读请求过来，在缓存中还是拿不到数据，再放一个读Request进队列，让数据区刷新换一下。
+                // 2、可能在200ms内，未从redis中读取到数据，没有等待到他执行。所以就直接查一次库，然后给队列中添加一个读Request。
+                // 3、数据库中本身就没有
             }
-
+            return Result.success(productInventoryDO);
         } catch (Exception e) {
             logger.error("ProductInventoryController.queryOne error,productId : {}", productId, e);
             return Result.fail();
