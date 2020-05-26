@@ -24,8 +24,15 @@ public class RequestProcessorThread implements Callable<Boolean> {
     @Override
     public Boolean call() throws Exception {
         // 线程变成后台线程，会不断的从跟自己绑定的queue中消费请求
-        while (true) {
-            break;
+        try {
+            while (true) {
+                // ArrayBlcokingQueue 在队列满了的时候，或者说是空的时候，就会被阻塞住
+                Request request = this.queue.take();
+                // 处理请求
+                request.process();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return true;
     }

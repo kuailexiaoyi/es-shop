@@ -23,4 +23,28 @@ public interface ProductInventoryService {
      * @Date: 2020/5/25
      */
     int update(ProductInventoryDO productInventoryDO);
+
+    /**
+     * @Desc: 删除商品库存缓存
+     * @Param productId
+     * @Return boolean
+     * @Date: 2020/5/26
+     */
+    boolean removeProductInventoryCache(Integer productId);
+
+    /**
+     * @Desc: 更新商品库存缓存
+     * @Param productInventoryDO
+     * @Return boolean
+     * @Date: 2020/5/26
+     */
+    boolean refreshProductInventoryCache(ProductInventoryDO productInventoryDO);
+
+    /**
+     * @Desc: 从缓存获取商品库存数据
+     * @Param productId
+     * @Return com.es.shop.inventory.entity.ProductInventoryDO
+     * @Date: 2020/5/26
+     */
+    ProductInventoryDO getProductInventoryFromCache(int productId);
 }

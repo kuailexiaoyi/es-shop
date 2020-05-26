@@ -52,4 +52,24 @@ public class RequestQueue {
     public void addQueue(ArrayBlockingQueue<Request> arrayBlockingQueue) {
         this.queues.add(arrayBlockingQueue);
     }
+
+    /**
+     * @Desc: 获取指定队列
+     * @Param index
+     * @Return java.util.concurrent.ArrayBlockingQueue<com.es.shop.inventory.request.Request>
+     * @Date: 2020/5/26
+     */
+    public ArrayBlockingQueue<Request> getQueue(int index) {
+        return this.queues.get(index);
+    }
+
+    /**
+     * @Desc: 获取队列数量
+     * @Param
+     * @Return int
+     * @Date: 2020/5/26
+     */
+    public int getSize() {
+        return this.queues.size();
+    }
 }
