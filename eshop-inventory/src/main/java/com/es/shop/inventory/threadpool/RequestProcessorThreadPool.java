@@ -20,7 +20,10 @@ public class RequestProcessorThreadPool {
      */
     private ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
             .setNameFormat("request-pool-%d").build();
-    private ExecutorService threadPool = new ThreadPoolExecutor(5, 10,
+
+    // private ExecutorService threadPool = Executors.newFixedThreadPool(10);
+
+    private ExecutorService threadPool = new ThreadPoolExecutor(10, 10,
             0L, TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
 

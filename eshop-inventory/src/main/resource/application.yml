@@ -33,3 +33,11 @@ spring:
 mybatis:
   config-location: classpath:mybatis/MapperConfig.xml
   mapper-locations: classpath:mapper/*.xml
+
+logging:
+  level:
+    com:
+      es:
+        shop:
+          inventory:
+            mapper: info

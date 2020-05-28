@@ -6,6 +6,7 @@ import com.es.shop.inventory.service.productinventory.ProductInventoryService;
 import com.es.shop.inventory.service.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * @Description: 商品库存服务实现类
@@ -44,15 +45,6 @@ public class ProductInventoryServiceImpl implements ProductInventoryService {
         return true;
     }
 
-    @Override
-    public ProductInventoryDO getProductInventoryFromCache(int productId) {
-        String inventoryCntStr = redisService.getValue(getRedisKey(productId));
-        ProductInventoryDO productInventoryDO = new ProductInventoryDO();
-        productInventoryDO.setProductId(productId);
-        productInventoryDO.setInventoryCnt(Integer.valueOf(inventoryCntStr));
-        return productInventoryDO;
-    }
-
     /**
      * @Desc: 获取库存在Redis中的key
      * @Param productId
@@ -61,5 +53,17 @@ public class ProductInventoryServiceImpl implements ProductInventoryService {
      */
     public String getRedisKey(int productId) {
         return "product:inventory:" + productId;
+    }
+
+    @Override
+    public ProductInventoryDO getProductInventoryFromCache(int productId) {
+        String inventoryCntStr = redisService.getValue(getRedisKey(productId));
+        if (StringUtils.isEmpty(inventoryCntStr)) {
+            return null;
+        }
+        ProductInventoryDO productInventoryDO = new ProductInventoryDO();
+        productInventoryDO.setProductId(productId);
+        productInventoryDO.setInventoryCnt(Integer.valueOf(inventoryCntStr));
+        return productInventoryDO;
     }
 }

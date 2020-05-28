@@ -7,5 +7,5 @@ package com.es.shop.inventory.request;
  */
 public interface RequestAsyncProcessService {
 
-    void process(Request request);
+    boolean process(Request request);
 }

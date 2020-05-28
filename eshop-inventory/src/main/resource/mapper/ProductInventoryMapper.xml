@@ -2,13 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.es.shop.inventory.mapper.productinventory.ProductInventoryMapper">
 
+    <resultMap id="BaseMap" type="com.es.shop.inventory.entity.ProductInventoryDO">
+        <result column="product_id" property="productId"></result>
+        <result column="inventory_cnt" property="inventoryCnt"></result>
+    </resultMap>
+
     <!--查询商品库存缓存-->
-    <select id="queryOne" resultType="com.es.shop.inventory.entity.ProductInventoryDO">
-        select * from product_inventory where id = #{id}
+    <select id="queryOne" resultMap="BaseMap">
+        select product_id, inventory_cnt from product_inventory where product_id = #{productId}
     </select>
 
     <!--更新商品库存缓存-->
-    <select id="update" resultType="java.lang.Integer">
-        update product_inventory set inventory_cnt = #{inventoryCnt} where id = #{id}
-    </select>
+    <update id="update">
+        update product_inventory set inventory_cnt = #{inventoryCnt} where product_id = #{productId}
+    </update>
 </mapper>

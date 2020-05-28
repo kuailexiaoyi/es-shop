@@ -3,6 +3,8 @@ package com.es.shop.inventory.request.impl;
 import com.es.shop.inventory.entity.ProductInventoryDO;
 import com.es.shop.inventory.request.Request;
 import com.es.shop.inventory.service.productinventory.ProductInventoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @Description: 商品库存更新请求
@@ -10,6 +12,8 @@ import com.es.shop.inventory.service.productinventory.ProductInventoryService;
  * @Version:v1.0
  */
 public class ProductInventoryDBReloadRequest implements Request {
+
+    private Logger logger = LoggerFactory.getLogger(ProductInventoryDBReloadRequest.class);
 
     /**
      * 商品Id
@@ -41,12 +45,13 @@ public class ProductInventoryDBReloadRequest implements Request {
 
     @Override
     public void process() {
-
+        logger.info("ProductInventoryDBReloadRequest.process , 开始执行库存读取操作，商品Id：{}", this.productId);
         // 通过商品Id查询库存
         ProductInventoryDO productInventoryDO = productInventoryService.queryOne(this.productId);
-
+        logger.info("ProductInventoryDBReloadRequest.process , 从数据库获取商品数据成功，商品Id:{}, 商品库存：{}", productInventoryDO.getProductId(), productInventoryDO.getInventoryCnt());
         // 更新Redis中的商品库存緩存
         productInventoryService.refreshProductInventoryCache(productInventoryDO);
+        logger.info("ProductInventoryDBReloadRequest.process process, 刷新Redis缓存成功，商品Id:{}, 商品库存：{}", productInventoryDO.getProductId(), productInventoryDO.getInventoryCnt());
     }
 
     @Override
