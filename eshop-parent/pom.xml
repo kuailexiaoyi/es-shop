@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>../eshop-inventory</module>
+        <module>../eshop-cache</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
