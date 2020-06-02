@@ -17,9 +17,17 @@ public class ProductInfo implements Serializable {
 
     private int price;
 
+    private String picturelist;
+
+    private String specification;
+
+    private String service;
+
     public int getId() {
         return id;
     }
+
+    private String color;
 
     public void setId(int id) {
         this.id = id;
@@ -39,5 +47,37 @@ public class ProductInfo implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getPicturelist() {
+        return picturelist;
+    }
+
+    public void setPicturelist(String picturelist) {
+        this.picturelist = picturelist;
+    }
+
+    public String getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(String specification) {
+        this.specification = specification;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

@@ -22,9 +22,6 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisClusterConfig {
 
     @Autowired
-    private JedisConfigProperties jedisConfigProperties;
-
-    @Autowired
     private RedisClusterConfigProperties redisClusterConfigProperties;
 
     /**
