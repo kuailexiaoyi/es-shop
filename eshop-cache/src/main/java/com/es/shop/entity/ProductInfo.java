@@ -23,6 +23,16 @@ public class ProductInfo implements Serializable {
 
     private String service;
 
+    private String modifiedTime;
+
+    public String getModifiedTime() {
+        return modifiedTime;
+    }
+
+    public void setModifiedTime(String modifiedTime) {
+        this.modifiedTime = modifiedTime;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,6 +1,8 @@
 package com.es.shop.listener;
 
 import com.es.shop.context.SpringContext;
+import com.es.shop.queue.RebuildCacheThread;
+import com.es.shop.service.CacheService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -25,6 +27,9 @@ public class InitListener implements ServletContextListener {
         SpringContext.setApplicationContext(applicationContext);
         logger.info("InitListener.contextInitialized start, 初始化kafka消费者，sce : {}", sce);
         // new Thread(new KafkaConsumer("cache-message")).start();
+        // 初始化重建缓存线程
+        new Thread(new RebuildCacheThread((CacheService) applicationContext.getBean("cacheService"))).start();
+
     }
 
     @Override

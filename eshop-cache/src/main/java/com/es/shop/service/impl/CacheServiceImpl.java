@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import redis.clients.jedis.JedisCluster;
 
 /**
@@ -43,6 +44,9 @@ public class CacheServiceImpl implements CacheService {
     @Override
     public ProductInfo getProductInfoFromRedisCache(int id) {
         String productInfoJson = jedisCluster.get("product_info_" + id);
+        if (StringUtils.isEmpty(productInfoJson)) {
+            return null;
+        }
         ProductInfo productInfo = JSON.parseObject(productInfoJson, ProductInfo.class);
         return productInfo;
     }
