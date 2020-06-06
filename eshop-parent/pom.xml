@@ -6,6 +6,7 @@
     <modules>
         <module>../eshop-inventory</module>
         <module>../eshop-cache</module>
+        <module>../strome-wordcount</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
