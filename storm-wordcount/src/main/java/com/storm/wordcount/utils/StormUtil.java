@@ -1,4 +1,4 @@
-package com.strome.wordcount.utils;
+package com.storm.wordcount.utils;
 
 /**
  * @Desc:

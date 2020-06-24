@@ -1,12 +1,14 @@
-package com.strome.wordcount.spout;
+package com.storm.wordcount.spout;
 
-import com.strome.wordcount.utils.StormUtil;
+import com.storm.wordcount.utils.StormUtil;
 import org.apache.storm.spout.SpoutOutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.topology.base.BaseRichSpout;
 import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Values;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Random;
@@ -17,6 +19,8 @@ import java.util.Random;
  * @Version:v1.0
  */
 public class RandomSentenceSpout extends BaseRichSpout {
+
+    private Logger logger = LoggerFactory.getLogger(RandomSentenceSpout.class);
 
     private SpoutOutputCollector spoutOutputCollector;
 
@@ -31,7 +35,7 @@ public class RandomSentenceSpout extends BaseRichSpout {
     @Override
     public void nextTuple() {
 
-        StormUtil.sleep(100);
+        StormUtil.sleep(1000);
 
         String[] sentences = new String[]{sentence("the cow jumped over the room"), sentence("an apple a day keeps the doctor away"),
                 sentence("four score and seven years ago"), sentence("snow white and the seven dwarfs"),
@@ -41,6 +45,7 @@ public class RandomSentenceSpout extends BaseRichSpout {
         final String sentence = sentences[random.nextInt(sentences.length - 1)];
 
         /** 将字符串发送出去*/
+        logger.info("RandomSentenceSpout.nextTuple process,【发射句子】：" + sentence);
         spoutOutputCollector.emit(new Values(sentence));
     }
 

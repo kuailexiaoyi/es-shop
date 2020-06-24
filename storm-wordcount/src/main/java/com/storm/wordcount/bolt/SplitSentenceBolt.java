@@ -1,4 +1,4 @@
-package com.strome.wordcount.bolt;
+package com.storm.wordcount.bolt;
 
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
@@ -7,7 +7,8 @@ import org.apache.storm.topology.base.BaseRichBolt;
 import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Tuple;
 import org.apache.storm.tuple.Values;
-import org.springframework.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -18,6 +19,8 @@ import java.util.Map;
  */
 public class SplitSentenceBolt extends BaseRichBolt {
 
+    private Logger logger = LoggerFactory.getLogger(SplitSentenceBolt.class);
+
     private OutputCollector outputCollector;
 
     @Override
@@ -27,13 +30,12 @@ public class SplitSentenceBolt extends BaseRichBolt {
 
     @Override
     public void execute(Tuple input) {
-        String sentence = input.getString(0);
-        if (StringUtils.isEmpty(sentence)) {
-            return;
-        }
-
+        String sentence = input.getStringByField("sentence");
         // 将句子已空格切割成字符
         String[] strArray = sentence.split(" ");
+
+        logger.info("SplitSentenceBolt.execute process, 根据空格切割字符串 ,sentence : {}", sentence);
+
         for (String s : strArray) {
             this.outputCollector.emit(new Values(s));
         }
